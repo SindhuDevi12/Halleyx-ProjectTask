@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoTrack - Products</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e0f2f1);
+      animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 25px;
+      margin: 0;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      color: white;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px 20px;
+    }
+
+    .home-btn {
+      text-decoration: none;
+      background-color: #4f87ff;
+      color: #4A148C;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: popUp 0.6s ease;
+      position: relative;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product h2 {
+      font-size: 18px;
+      margin: 10px 0 5px;
+      color: #1f2937;
+    }
+
+    .product p {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 12px;
+    }
+
+    .add-btn {
+      background: linear-gradient(45deg, #10b981, #22c55e);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+      background: linear-gradient(45deg, #059669, #16a34a);
+      transform: scale(1.05);
+    }
+
+    .favorite {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #bbb;
+      transition: color 0.3s;
+    }
+
+    .favorite.active {
+      color: red;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+      z-index: 10;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .popup-content h2 {
+      margin-bottom: 20px;
+      color: #10b981;
+    }
+
+    .popup-content button {
+      padding: 10px 20px;
+      border: none;
+      background: #3b82f6;
+      color: white;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="index.html" class="home-btn">🏠 Home</a>
+  </div>
+
+  <h1>Available Products</h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>✅ Order Placed Successfully!</h2>
+      <button onclick="closePopup()">Back to Products</button>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        "name": "Wireless Headphones",
+        "description": "High-quality noise-cancelling Bluetooth headphones.",
+        "image": "https://cdns3.thecosmicbyte.com/wp-content/uploads/white-bg-2.jpg.webp",
+        "price": 2999
+      },
+      {
+        "name": "Smartphone Holder",
+        "description": "Adjustable mobile holder for desks and cars.",
+        "image": "https://skyvik.in/cdn/shop/files/magtaplock-bike.png?v=1737697164",
+        "price": 499
+      },
+      {
+        "name": "Eco-Friendly Water Bottle",
+        "description": "Reusable stainless steel water bottle – 750ml.",
+        "image": "https://giftkyade.com/cdn/shop/files/woodenbottle_lifestyle7_logo_dc1107f0-84f0-4b18-8bb8-f3c86fe9d1ee-545504.jpg?v=1723884835",
+        "price": 699
+      },
+      {
+        "name": "Mini Air Purifier",
+        "description": "USB-powered air purifier for personal use.",
+        "image": "https://m.media-amazon.com/images/I/71xpBqB+laL._UF894,1000_QL80_.jpg",
+        "price": 1499
+      },
+      {
+        "name": "Smart Watch",
+        "description": "Fitness tracker with heart rate monitor and notifications.",
+        "image": "https://www.lapcare.com/cdn/shop/files/Fitso_3_black.jpg?v=1747984269",
+        "price": 2599
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "description": "Portable waterproof speaker with 10-hour battery life.",
+        "image": "https://images.naptol.com/usr/local/csp/staticContent/product_images/horizontal/750x750/Rechargeable-Powerful-Bluetooth-Speaker-with-FM-1.jpg",
+        "price": 1999
+      },
+      {
+        "name": "Wireless Mouse",
+        "description": "Rechargeable silent-click ergonomic mouse.",
+        "image": "https://www.portronics.com/cdn/shop/files/Toad321500X1500Blue1.jpg?v=1699100039",
+        "price": 799
+      },
+      {
+        "name": "LED Desk Lamp",
+        "description": "Adjustable brightness LED lamp with USB charging.",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ0i_7aYheWlWHotfbjWIe5OKqebBF6qTIeA&s",
+        "price": 899
+      },
+      {
+        "name": "E-Waste Collection Box",
+        "description": "Eco bin for safely storing old electronics.",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68_0GD-xtQXFhyD1h6pjOcnNcCw2h42mx7w&s",
+        "price": 399
+      },
+      {
+        "name": "Recycled Notebook",
+        "description": "A5-sized notebook made from recycled paper.",
+        "image": "https://www.wecomart.com/images/thumbs/0002486_bamboo-notebook-with-recycled-paper-50-pages_625.jpeg",
+        "price": 249
+      },
+      {
+    "name": "Reusable Bamboo Straw Set",
+    "description": "Eco-friendly bamboo straws that are reusable, durable, and perfect for cold drinks.",
+    "image": "https://m.media-amazon.com/images/I/81a9RyYxbiL.jpg",
+    "price": 199
+  },
+  {
+    "name": "Biodegradable Trash Bags",
+    "description": "Strong, leak-proof trash bags made from biodegradable materials, safe for the environment.",
+    "image": "https://target.scene7.com/is/image/Target/GUEST_e3e6c23c-ed5f-4689-8c3b-3a4fb56dae75?wid=488&hei=488&fmt=pjpeg",
+    "price": 299
+  }
+    ];
+
+    const productGrid = document.getElementById('productGrid');
+
+    products.forEach((product, index) => {
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `
+        <div class="favorite" onclick="toggleFavorite(this)">&#10084;</div>
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <div class="price">₹${product.price}</div>
+        <button class="add-btn" onclick="addToCart(${index})">Add to Cart</button>
+      `;
+      productGrid.appendChild(div);
+    });
+
+    function addToCart(index) {
+      const product = products[index];
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = 'pickup.html';
+    }
+
+    function toggleFavorite(el) {
+      el.classList.toggle('active');
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

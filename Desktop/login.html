@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | EcoTrack</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      transition: background 0.5s, color 0.5s;
+      background: linear-gradient(120deg, #74ebd5, #ACB6E5);
+      color: #333;
+    }
+
+    .dark-mode {
+      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    .dark-mode .login-box {
+      background: rgba(25, 25, 25, 0.95);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4A00E0;
+    }
+
+    .dark-mode h2 {
+      color: #fff;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #4A00E0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #FF512F, #DD2476);
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar button {
+      width: auto;
+      padding: 8px 12px;
+      font-size: 14px;
+      background-color: #4A00E0;
+      margin-left: 10px;
+      border-radius: 8px;
+      color: white;
+      border: none;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 9999;
+      animation: popIn 0.5s ease-out;
+      text-align: center;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    @keyframes popIn {
+      from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    .dark-mode .popup {
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <button onclick="toggleDarkMode()">🌙 / ☀️</button>
+    <button onclick="goHome()">🏠 Home</button>
+  </div>
+
+  <div class="container">
+    <div class="login-box">
+      <h2>Login to EcoTrack</h2>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    <!-- Success or error message appears here -->
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value;
+      const popup = document.getElementById("popup");
+
+      const userData = localStorage.getItem("registeredUser");
+      if (!userData) {
+        showPopup("⚠️ No user registered yet!", false);
+        return;
+      }
+
+      const user = JSON.parse(userData);
+
+      if (email === user.email && pass === user.password) {
+        showPopup("✅ Login successful! Welcome " + user.name, true);
+        setTimeout(() => {
+          window.location.href = "index.html"; // Change as needed
+        }, 2000);
+      } else {
+        showPopup("❌ Invalid email or password", false);
+      }
+    }
+
+    function showPopup(message, success = true) {
+      const popup = document.getElementById("popup");
+      popup.innerHTML = `${message}<br><br><button onclick="popup.classList.remove('show')">Close</button>`;
+      popup.classList.add("show");
+    }
+    const user = JSON.parse(localStorage.getItem("registeredUser")) || {};
+const storedEmail = user.email;
+const storedPassword = user.password;
+
+  </script>
+</body>
+</html>

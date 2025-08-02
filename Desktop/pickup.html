@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #d0c4f3, #a0e1f3);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6a1b9a;
+    }
+
+    .top-bar {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .top-bar a {
+      text-decoration: none;
+      color: #333;
+      background: #3f67e9;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 800px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+
+    img {
+      height: 90px;
+      width: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .info {
+      flex: 1;
+      margin-left: 20px;
+    }
+
+    .info h3 {
+      margin: 5px 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .delete-btn, .order-btn {
+      background: #ff1744;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .order-btn {
+      background-color: #4CAF50;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 2px solid #4CAF50;
+      padding: 30px;
+      text-align: center;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
+    .popup button {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html">🏠 Home</a>
+</div>
+
+<h1>Your Cart</h1>
+<div id="cart-container"></div>
+
+<div id="popup" class="popup">
+  <h2>Order Placed Successfully!</h2>
+  <button onclick="backToProduct()">Back to Products</button>
+</div>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function displayCart() {
+    const container = document.getElementById('cart-container');
+    container.innerHTML = '';
+
+    if (cart.length === 0) {
+      container.innerHTML = "<p style='text-align:center;'>No items in cart.</p>";
+      return;
+    }
+
+    cart.forEach((product, index) => {
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `
+        <img src="${product.image}" alt="Image" />
+        <div class="info">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <strong>₹${product.price}</strong>
+        </div>
+        <div class="buttons">
+          <button class="order-btn" onclick="placeOrder(${index})">Place Order</button>
+          <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function deleteItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+  }
+
+  function placeOrder(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+    document.getElementById('popup').style.display = 'block';
+  }
+
+  function backToProduct() {
+    window.location.href = 'product.html';
+  }
+
+  displayCart();
+</script>
+
+</body>
+</html>

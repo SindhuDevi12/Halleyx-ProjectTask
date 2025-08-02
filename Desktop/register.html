@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | EcoTrack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Fonts & Reset */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      transition: background 0.5s, color 0.5s;
+      background: linear-gradient(120deg, #74ebd5, #ACB6E5);
+      color: #333;
+    }
+
+    .dark-mode {
+      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .register-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    .dark-mode .register-box {
+      background: rgba(25, 25, 25, 0.95);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4A00E0;
+    }
+
+    .dark-mode h2 {
+      color: #fff;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #4A00E0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #FF512F, #DD2476);
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar button {
+      width: auto;
+      padding: 8px 12px;
+      font-size: 14px;
+      background-color: #4A00E0;
+      margin-left: 10px;
+      border-radius: 8px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 9999;
+      animation: popIn 0.5s ease-out;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    @keyframes popIn {
+      from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    .dark-mode .popup {
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <button onclick="toggleDarkMode()">🌙 / ☀️</button>
+    <button onclick="goHome()">🏠 Home</button>
+  </div>
+
+  <div class="container">
+    <div class="register-box">
+      <h2>User Registration</h2>
+      <div class="input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <div class="input-group">
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" required>
+      </div>
+      <button onclick="register()">Register</button>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    🎉 User Registered Successfully!<br><br>
+    <button onclick="redirectLogin()">Go to Login</button>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    function goHome() {
+      window.location.href = "index.html"; // Change if needed
+    }
+
+    function register() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+
+      if (!name || !email || !pass || !confirm) {
+        alert("All fields are required!");
+        return;
+      }
+
+      if (pass !== confirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Save to localStorage
+      const user = { name, email, password: pass };
+      localStorage.setItem("registeredUser", JSON.stringify(user));
+
+      // Show popup
+      document.getElementById("popup").classList.add("show");
+    }
+
+    function redirectLogin() {
+      window.location.href = "login.html"; // Change if needed
+    }
+  </script>
+</body>
+</html>

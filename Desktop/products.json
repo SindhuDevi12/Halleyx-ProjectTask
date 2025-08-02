@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Wireless Headphones",
+    "description": "High-quality noise-cancelling Bluetooth headphones.",
+    "image": "EcoTrack-Frontend/images/wirelessheadphone.jpeg",
+    "price": 2999
+  },
+  {
+    "name": "Smartphone Holder",
+    "description": "Adjustable mobile holder for desks and cars.",
+    "image": "https://i.imgur.com/WvZdo5d.jpg",
+    "price": 499
+  },
+  {
+    "name": "Eco-Friendly Water Bottle",
+    "description": "Reusable stainless steel water bottle – 750ml.",
+    "image": "https://i.imgur.com/Vj7cL7u.jpg",
+    "price": 699
+  },
+  {
+    "name": "Mini Air Purifier",
+    "description": "USB-powered air purifier for personal use.",
+    "image": "https://i.imgur.com/LtBoCNy.jpg",
+    "price": 1499
+  },
+  {
+    "name": "Smart Watch",
+    "description": "Fitness tracker with heart rate monitor and notifications.",
+    "image": "https://i.imgur.com/jZKxIEq.jpg",
+    "price": 2599
+  },
+  {
+    "name": "Bluetooth Speaker",
+    "description": "Portable waterproof speaker with 10-hour battery life.",
+    "image": "https://i.imgur.com/yFfOAMj.jpg",
+    "price": 1999
+  },
+  {
+    "name": "Wireless Mouse",
+    "description": "Rechargeable silent-click ergonomic mouse.",
+    "image": "https://i.imgur.com/wLJzZ3r.jpg",
+    "price": 799
+  },
+  {
+    "name": "LED Desk Lamp",
+    "description": "Adjustable brightness LED lamp with USB charging.",
+    "image": "https://i.imgur.com/f2DgzBc.jpg",
+    "price": 899
+  },
+  {
+    "name": "E-Waste Collection Box",
+    "description": "Eco bin for safely storing old electronics.",
+    "image": "https://i.imgur.com/hYiV7Zu.jpg",
+    "price": 399
+  },
+  {
+    "name": "Recycled Notebook",
+    "description": "A5-sized notebook made from recycled paper.",
+    "image": "https://i.imgur.com/g0d7KMX.jpg",
+    "price": 249
+  },
+  {
+    "name": "Reusable Bamboo Straw Set",
+    "description": "Eco-friendly bamboo straws that are reusable, durable, and perfect for cold drinks.",
+    "image": "images/bamboo-straw.jpg",
+    "price": 199
+  },
+  {
+    "name": "Biodegradable Trash Bags",
+    "description": "Strong, leak-proof trash bags made from biodegradable materials, safe for the environment.",
+    "image": "images/trash-bags.jpg",
+    "price": 299
+  }
+]
+
+
